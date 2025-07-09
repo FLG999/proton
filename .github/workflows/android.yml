@@ -22,17 +22,19 @@ jobs:
           java-version: '17'
           distribution: 'temurin'
           cache: 'gradle'
+          
+      - name: Install NDK and CMake
+        # This step uses the Android SDK manager to install the required native build tools
+        run: echo "y" | sudo ${ANDROID_HOME}/cmdline-tools/latest/bin/sdkmanager --install "cmake;3.18.1"
 
       - name: Grant execute permission for gradlew
         run: chmod +x gradlew
 
       - name: Build a Specific Flavor
-        # This command builds a specific combination of flavors to avoid the dependency error.
         run: ./gradlew assembleProductionVanillaOpenSourceDebug
 
       - name: Upload APK
         uses: actions/upload-artifact@v4
         with:
           name: app-production-vanilla-open-source-debug.apk
-          # The path must match the specific flavor we built.
           path: app/build/outputs/apk/productionVanillaOpenSource/debug/app-production-vanilla-open-source-debug.apk
