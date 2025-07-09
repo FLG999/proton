@@ -24,12 +24,15 @@ jobs:
           cache: 'gradle'
           
       - name: Install NDK and CMake
-        # This step uses the Android SDK manager to install the required native build tools
         run: echo "y" | sudo ${ANDROID_HOME}/cmdline-tools/latest/bin/sdkmanager --install "cmake;3.18.1"
 
       - name: Grant execute permission for gradlew
         run: chmod +x gradlew
 
+      - name: Create debug keystore directory
+        # This fixes the "Unable to create debug keystore" error
+        run: mkdir -p /home/runner/.android
+        
       - name: Build a Specific Flavor
         run: ./gradlew assembleProductionVanillaOpenSourceDebug
 
