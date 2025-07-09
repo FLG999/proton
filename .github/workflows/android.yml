@@ -4,7 +4,7 @@ name: Build Android App
 
 on:
   push:
-    branches: [ "main" ] # This runs the build every time you push to the main branch
+    branches: [ "master" ] # This runs the build every time you push to the main branch
 
 jobs:
   build:
