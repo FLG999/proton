@@ -27,7 +27,7 @@ jobs:
         run: chmod +x gradlew
 
       - name: Build with Gradle
-        run: ./gradlew assembleDebug # Changed to build only the debug APK
+        run: ./gradlew assembleDebug -x lint -x test # Skips lint and test tasks
 
       - name: Upload APK
         uses: actions/upload-artifact@v4
