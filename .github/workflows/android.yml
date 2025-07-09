@@ -1,0 +1,34 @@
+# .github/workflows/android.yml
+
+name: Build Android App
+
+on:
+  push:
+    branches: [ "main" ] # This runs the build every time you push to the main branch
+
+jobs:
+  build:
+    runs-on: ubuntu-latest # Use a fresh virtual machine for the build
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up JDK 17
+        uses: actions/setup-java@v4
+        with:
+          java-version: '17'
+          distribution: 'temurin'
+          cache: 'gradle'
+
+      - name: Grant execute permission for gradlew
+        run: chmod +x gradlew
+
+      - name: Build with Gradle
+        run: ./gradlew build
+
+      - name: Upload APK
+        uses: actions/upload-artifact@v4
+        with:
+          name: app-debug.apk # The name of the file you will download
+          path: app/build/outputs/apk/debug/app-debug.apk # The path to the APK after the build
